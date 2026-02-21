@@ -137,7 +137,7 @@ const BookingConfirmation = () => {
                 <div className="flex justify-between items-center">
                   <span className="text-xl font-bold text-gray-900 dark:text-white">Total Cost</span>
                   <span className="text-3xl font-bold text-[#e53935]">
-                    ${booking.totalCost}
+                    ₱{booking.totalCost.toLocaleString()}
                   </span>
                 </div>
               </div>
