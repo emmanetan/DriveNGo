@@ -110,7 +110,7 @@ const FeaturedVehicles = () => {
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">Starting at</p>
                     <p className="text-3xl font-bold text-[#e53935]">
-                      ${vehicle.pricePerDay}
+                      ₱{vehicle.pricePerDay.toLocaleString()}
                       <span className="text-base text-gray-600 dark:text-gray-400">/day</span>
                     </p>
                   </div>
