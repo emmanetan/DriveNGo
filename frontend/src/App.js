@@ -4,6 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/context/ThemeContext";
 import HomePage from "@/pages/HomePage";
+import VehiclesPage from "@/pages/VehiclesPage";
+import ServicesPage from "@/pages/ServicesPage";
+import AboutPage from "@/pages/AboutPage";
+import ContactPage from "@/pages/ContactPage";
 import BookingPage from "@/pages/BookingPage";
 import BookingConfirmation from "@/pages/BookingConfirmation";
 
@@ -14,12 +18,12 @@ function App() {
         <div className="App">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/vehicles" element={<VehiclesPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/booking" element={<BookingPage />} />
             <Route path="/booking-confirmation" element={<BookingConfirmation />} />
-            <Route path="/vehicles" element={<HomePage />} />
-            <Route path="/services" element={<HomePage />} />
-            <Route path="/about" element={<HomePage />} />
-            <Route path="/contact" element={<HomePage />} />
           </Routes>
           <Toaster position="top-right" richColors />
         </div>
