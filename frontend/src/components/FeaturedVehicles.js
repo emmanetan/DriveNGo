@@ -15,9 +15,12 @@ const FeaturedVehicles = () => {
     { value: 'Electric Premium', label: 'Electric' }
   ];
 
+  // Filter to show only available vehicles
+  const availableVehicles = vehicles.filter(v => v.available);
+  
   const filteredVehicles = filter === 'all' 
-    ? vehicles 
-    : vehicles.filter(v => v.category === filter);
+    ? availableVehicles 
+    : availableVehicles.filter(v => v.category === filter);
 
   return (
     <section className="py-20 bg-white dark:bg-[#1a1a1a]">
