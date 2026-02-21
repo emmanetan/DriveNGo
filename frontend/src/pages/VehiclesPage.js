@@ -118,7 +118,7 @@ const VehiclesPage = () => {
                 {currentVehicles.map((vehicle) => (
                   <div
                     key={vehicle.id}
-                    className="group bg-white dark:bg-[#1a1a1a] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-[#e53935]/20 transition-all duration-500 hover:-translate-y-2"
+                    className="group bg-white dark:bg-[#1a1a1a] rounded-3xl overflow-hidden shadow-lg transition-shadow duration-300"
                   >
                     {/* Image Container */}
                     <div className="relative h-64 overflow-hidden">
