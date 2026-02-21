@@ -115,7 +115,7 @@ const BookingPage = () => {
                     <SelectContent>
                       {vehicles.filter(v => v.available).map((vehicle) => (
                         <SelectItem key={vehicle.id} value={vehicle.id.toString()}>
-                          {vehicle.name} - ${vehicle.pricePerDay}/day
+                          {vehicle.name} - ₱{vehicle.pricePerDay.toLocaleString()}/day
                         </SelectItem>
                       ))}
                     </SelectContent>
