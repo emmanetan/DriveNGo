@@ -291,7 +291,7 @@ const BookingPage = () => {
                       <div className="flex justify-between">
                         <span className="text-gray-600 dark:text-gray-400">Price per day</span>
                         <span className="font-semibold text-gray-900 dark:text-white">
-                          ${selectedVehicle.pricePerDay}
+                          ₱{selectedVehicle.pricePerDay.toLocaleString()}
                         </span>
                       </div>
                       
@@ -306,7 +306,7 @@ const BookingPage = () => {
                           <div className="border-t border-gray-200 dark:border-gray-800 pt-3 flex justify-between">
                             <span className="text-lg font-bold text-gray-900 dark:text-white">Total</span>
                             <span className="text-2xl font-bold text-[#e53935]">
-                              ${calculateTotalCost()}
+                              ₱{calculateTotalCost().toLocaleString()}
                             </span>
                           </div>
                         </>
