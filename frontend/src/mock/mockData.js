@@ -66,6 +66,72 @@ export const vehicles = [
     seats: 5,
     transmission: "Manual",
     fuel: "Petrol"
+  },
+  {
+    id: 7,
+    name: "Toyota Fortuner",
+    category: "Adventure SUV",
+    image: "https://images.pexels.com/photos/33431295/pexels-photo-33431295.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    pricePerDay: 2800,
+    available: true,
+    seats: 7,
+    transmission: "Automatic",
+    fuel: "Diesel"
+  },
+  {
+    id: 8,
+    name: "Honda Civic",
+    category: "Economy Sedan",
+    image: "https://images.pexels.com/photos/36067529/pexels-photo-36067529.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    pricePerDay: 1800,
+    available: true,
+    seats: 5,
+    transmission: "Automatic",
+    fuel: "Petrol"
+  },
+  {
+    id: 9,
+    name: "Audi A6",
+    category: "Luxury Sedan",
+    image: "https://images.pexels.com/photos/12152812/pexels-photo-12152812.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    pricePerDay: 3800,
+    available: true,
+    seats: 5,
+    transmission: "Automatic",
+    fuel: "Petrol"
+  },
+  {
+    id: 10,
+    name: "Nissan X-Trail",
+    category: "Adventure SUV",
+    image: "https://images.pexels.com/photos/33431240/pexels-photo-33431240.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    pricePerDay: 2200,
+    available: true,
+    seats: 7,
+    transmission: "Automatic",
+    fuel: "Petrol"
+  },
+  {
+    id: 11,
+    name: "Lexus ES",
+    category: "Premium Sedan",
+    image: "https://images.pexels.com/photos/31040150/pexels-photo-31040150.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    pricePerDay: 3200,
+    available: true,
+    seats: 5,
+    transmission: "Automatic",
+    fuel: "Petrol"
+  },
+  {
+    id: 12,
+    name: "Ford Expedition",
+    category: "Luxury SUV",
+    image: "https://images.pexels.com/photos/33431295/pexels-photo-33431295.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    pricePerDay: 5000,
+    available: false,
+    seats: 8,
+    transmission: "Automatic",
+    fuel: "Diesel"
   }
 ];
 
