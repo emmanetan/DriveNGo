@@ -52,12 +52,12 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
-                className={`text-sm font-medium transition-colors duration-200 relative group ${
+                className={`text-sm font-medium transition-colors duration-200 relative group px-3 py-2 ${
                   isActive(link.path)
                     ? 'text-[#e53935]'
                     : 'text-gray-700 dark:text-gray-300 hover:text-[#e53935]'
