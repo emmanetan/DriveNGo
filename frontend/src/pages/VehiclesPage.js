@@ -149,7 +149,7 @@ const VehiclesPage = () => {
 
                     {/* Content */}
                     <div className="p-6">
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-[#e53935] transition-colors duration-300">
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                         {vehicle.name}
                       </h3>
 
