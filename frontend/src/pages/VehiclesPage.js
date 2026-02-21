@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Fuel, Gauge, Search } from 'lucide-react';
+import { ArrowRight, Users, Fuel, Gauge, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Input } from '../components/ui/input';
@@ -11,6 +11,8 @@ import { vehicles } from '../mock/mockData';
 const VehiclesPage = () => {
   const [filter, setFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   const categories = [
     { value: 'all', label: 'All Vehicles' },
@@ -22,12 +24,29 @@ const VehiclesPage = () => {
     { value: 'Electric Premium', label: 'Electric Vehicles' }
   ];
 
+  // Filter vehicles based on category and search
   const filteredVehicles = vehicles.filter(v => {
     const matchesCategory = filter === 'all' || v.category === filter;
     const matchesSearch = v.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          v.category.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredVehicles.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentVehicles = filteredVehicles.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filter or search changes
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [filter, searchQuery]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0f0f10]">
@@ -88,90 +107,137 @@ const VehiclesPage = () => {
           {/* Results Count */}
           <div className="mb-8">
             <p className="text-center text-gray-600 dark:text-gray-400">
-              Showing <span className="font-semibold text-[#e53935]">{filteredVehicles.length}</span> vehicle{filteredVehicles.length !== 1 ? 's' : ''}
+              Showing <span className="font-semibold text-[#e53935]">{startIndex + 1}-{Math.min(endIndex, filteredVehicles.length)}</span> of <span className="font-semibold text-[#e53935]">{filteredVehicles.length}</span> vehicle{filteredVehicles.length !== 1 ? 's' : ''}
             </p>
           </div>
 
           {/* Vehicle Grid */}
-          {filteredVehicles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredVehicles.map((vehicle) => (
-                <div
-                  key={vehicle.id}
-                  className="group bg-white dark:bg-[#1a1a1a] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-[#e53935]/20 transition-all duration-500 hover:-translate-y-2"
-                >
-                  {/* Image Container */}
-                  <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={vehicle.image}
-                      alt={vehicle.name}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                    />
-                    {/* Availability Badge */}
-                    <div className="absolute top-4 right-4">
-                      <Badge 
-                        className={`${
-                          vehicle.available 
-                            ? 'bg-green-500 hover:bg-green-600' 
-                            : 'bg-gray-500 hover:bg-gray-600'
-                        } text-white px-3 py-1`}
-                      >
-                        {vehicle.available ? 'Available' : 'Booked'}
-                      </Badge>
-                    </div>
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-white/90 dark:bg-gray-900/90 text-gray-900 dark:text-white backdrop-blur-sm px-3 py-1">
-                        {vehicle.category}
-                      </Badge>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-[#e53935] transition-colors duration-300">
-                      {vehicle.name}
-                    </h3>
-
-                    {/* Specs */}
-                    <div className="flex items-center justify-between mb-4 text-sm text-gray-600 dark:text-gray-400">
-                      <div className="flex items-center space-x-1">
-                        <Users className="h-4 w-4" />
-                        <span>{vehicle.seats} Seats</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Gauge className="h-4 w-4" />
-                        <span>{vehicle.transmission}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Fuel className="h-4 w-4" />
-                        <span>{vehicle.fuel}</span>
-                      </div>
-                    </div>
-
-                    {/* Price and CTA */}
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-800">
-                      <div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Starting at</p>
-                        <p className="text-3xl font-bold text-[#e53935]">
-                          ₱{vehicle.pricePerDay.toLocaleString()}
-                          <span className="text-base text-gray-600 dark:text-gray-400">/day</span>
-                        </p>
-                      </div>
-                      <Link to={`/booking?vehicleId=${vehicle.id}`}>
-                        <Button
-                          className="bg-[#e53935] hover:bg-[#ff4d4d] text-white rounded-full group/btn"
-                          disabled={!vehicle.available}
+          {currentVehicles.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {currentVehicles.map((vehicle) => (
+                  <div
+                    key={vehicle.id}
+                    className="group bg-white dark:bg-[#1a1a1a] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-[#e53935]/20 transition-all duration-500 hover:-translate-y-2"
+                  >
+                    {/* Image Container */}
+                    <div className="relative h-64 overflow-hidden">
+                      <img
+                        src={vehicle.image}
+                        alt={vehicle.name}
+                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                      />
+                      {/* Availability Badge */}
+                      <div className="absolute top-4 right-4">
+                        <Badge 
+                          className={`${
+                            vehicle.available 
+                              ? 'bg-green-500 hover:bg-green-600' 
+                              : 'bg-gray-500 hover:bg-gray-600'
+                          } text-white px-3 py-1`}
                         >
-                          Book Now
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                        </Button>
-                      </Link>
+                          {vehicle.available ? 'Available' : 'Booked'}
+                        </Badge>
+                      </div>
+                      {/* Category Badge */}
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-white/90 dark:bg-gray-900/90 text-gray-900 dark:text-white backdrop-blur-sm px-3 py-1">
+                          {vehicle.category}
+                        </Badge>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6">
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-[#e53935] transition-colors duration-300">
+                        {vehicle.name}
+                      </h3>
+
+                      {/* Specs */}
+                      <div className="flex items-center justify-between mb-4 text-sm text-gray-600 dark:text-gray-400">
+                        <div className="flex items-center space-x-1">
+                          <Users className="h-4 w-4" />
+                          <span>{vehicle.seats} Seats</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <Gauge className="h-4 w-4" />
+                          <span>{vehicle.transmission}</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <Fuel className="h-4 w-4" />
+                          <span>{vehicle.fuel}</span>
+                        </div>
+                      </div>
+
+                      {/* Price and CTA */}
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-800">
+                        <div>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">Starting at</p>
+                          <p className="text-3xl font-bold text-[#e53935]">
+                            ₱{vehicle.pricePerDay.toLocaleString()}
+                            <span className="text-base text-gray-600 dark:text-gray-400">/day</span>
+                          </p>
+                        </div>
+                        <Link to={`/booking?vehicleId=${vehicle.id}`}>
+                          <Button
+                            className="bg-[#e53935] hover:bg-[#ff4d4d] text-white rounded-full group/btn"
+                            disabled={!vehicle.available}
+                          >
+                            Book Now
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center space-x-2 mt-12">
+                  {/* Previous Button */}
+                  <Button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    variant="outline"
+                    className="border-2 border-gray-300 dark:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-full px-4"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </Button>
+
+                  {/* Page Numbers */}
+                  <div className="flex items-center space-x-2">
+                    {[...Array(totalPages)].map((_, index) => {
+                      const pageNumber = index + 1;
+                      return (
+                        <Button
+                          key={pageNumber}
+                          onClick={() => handlePageChange(pageNumber)}
+                          className={`rounded-full w-12 h-12 ${
+                            currentPage === pageNumber
+                              ? 'bg-[#e53935] hover:bg-[#ff4d4d] text-white'
+                              : 'bg-white dark:bg-[#1a1a1a] text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border-2 border-gray-300 dark:border-gray-700'
+                          }`}
+                        >
+                          {pageNumber}
+                        </Button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Next Button */}
+                  <Button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    variant="outline"
+                    className="border-2 border-gray-300 dark:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-full px-4"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </Button>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-20">
               <p className="text-xl text-gray-600 dark:text-gray-400">
