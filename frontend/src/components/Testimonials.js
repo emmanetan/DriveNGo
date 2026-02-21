@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 import { testimonials } from '../mock/mockData';
 
@@ -6,13 +6,13 @@ const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const nextTestimonial = () => {
+  const nextTestimonial = useCallback(() => {
     if (!isAnimating) {
       setIsAnimating(true);
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
       setTimeout(() => setIsAnimating(false), 500);
     }
-  };
+  }, [isAnimating]);
 
   const prevTestimonial = () => {
     if (!isAnimating) {
@@ -26,7 +26,7 @@ const Testimonials = () => {
   useEffect(() => {
     const interval = setInterval(nextTestimonial, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [nextTestimonial]);
 
   const currentTestimonial = testimonials[currentIndex];
 
